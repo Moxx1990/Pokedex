@@ -12,18 +12,18 @@
 
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand">Pokedex</a>
+    <a class="navbar-brand" onclick="reload()">Pokedex</a>
     <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" onkeyup="searchPokemon()" placeholder="Search" aria-label="Search"/>
-      <button class="btn btn-outline-success" type="submit">Search</button>
+      <input class="form-control me-2" type="search" onkeyup="searchPokemon()" placeholder="Search for Pokemon..." aria-label="Search"/>
+      <button class="button" type="submit">Search</button>
     </form>
   </div>
 </nav>
 <div id="pokemon-container" class="pokemon-container">Test</div>
     
-<div>
+<div class="load-more">
 
-<button onclick="loadMorePokemon()">Load More Pokémon</button>
+<button onclick="loadMorePokemon()" class="button">Load More Pokémon</button>
 
 </div>
 </body>

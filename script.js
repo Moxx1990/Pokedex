@@ -6,6 +6,11 @@ async function getPokemonStart() {
     getPokemonData();
 }
 
+async function reload() {
+    pokemonloadIndex = 10;
+    getPokemonStart();
+}
+
 async function getPokemonData() {
     let amountOfPokemon = pokemonloadIndex;
     let url = `https://pokeapi.co/api/v2/pokemon?limit=${amountOfPokemon}&offset=0`;
@@ -19,8 +24,7 @@ async function getPokemonData() {
         })
     );
 
-    currentPokemon = pokemonDetails;
-    console.log(loadedPokemon);    
+    currentPokemon = pokemonDetails;  
     console.log(pokemonDetails);
     
     pokemonPreview();  
@@ -35,18 +39,24 @@ async function pokemonPreview() {
         let pokemonId= currentPokemon[index].id;
         let pokemonImage = currentPokemon[index].sprites.front_default;
         let pokemonType = currentPokemon[index].types[0].type.name;
+        let pokemonSecondType = currentPokemon[index].types[1]?.type.name || "none";
 
        container.innerHTML += `<div class="pokemon-card" id="pokemon-card-${index}" onclick="createPokemonCard(${index})">
             <div>#${pokemonId} ${pokemonName}</div>
-            <div class="${pokemonType}"><img src="${pokemonImage}"> </div>
-            <div><img src="./picture/${pokemonType}.png" class="${pokemonType} pokemon-type-icon"></div>
+            <div class="${pokemonType} pokemon-card-image"><img src="${pokemonImage}"> </div>
+            <div class="pokemon-card-type">
+                <img src="./picture/${pokemonType}.png" class="${pokemonType} pokemon-type-icon">
+                <img src="./picture/${pokemonSecondType}.png" class="${pokemonSecondType} pokemon-type-icon" onerror="this.style.display='none'">
+            </div>
     </div>`;
 } 
         
     }    
 
-async function createPokemonCard(index) {
-
+function createPokemonCard(index) {
+    let pokemon = currentPokemon[index];
+    console.log(pokemon);
+    
 } 
 
 
