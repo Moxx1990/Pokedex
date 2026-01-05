@@ -1,13 +1,25 @@
-let pokemonloadIndex = 10;
+let pokemonloadIndex = 20;
 let currentPokemon = [];
 
 
 async function getPokemonStart() {
-    getPokemonData();
+    loadingScreen();
+    await getPokemonData();
+    pokemonPreview();
 }
 
+function loadingScreen() {
+    let container = document.getElementById('pokemon-container');
+    container.innerHTML = `<div class="loading-screen">
+    <div class="loading"></div>
+    <div>Loading...</div>
+</div>`;
+}
+
+
+
 async function reload() {
-    pokemonloadIndex = 10;
+    pokemonloadIndex = 20;
     getPokemonStart();
 }
 
@@ -26,9 +38,6 @@ async function getPokemonData() {
 
     currentPokemon = pokemonDetails;  
     console.log(pokemonDetails);
-    
-    pokemonPreview();  
-
 }
 
 async function pokemonPreview() {
@@ -61,9 +70,9 @@ function createPokemonCard(index) {
 
 
 async function loadMorePokemon() {
-    pokemonloadIndex = pokemonloadIndex + 10;
+    pokemonloadIndex = pokemonloadIndex + 20;
     getPokemonStart();
-}
+ }
 
 function searchPokemon() {
     
