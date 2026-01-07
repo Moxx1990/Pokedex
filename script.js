@@ -2,6 +2,8 @@ let pokemonloadIndex = 20;
 let currentPokemon = [];
 
 
+
+
 async function getPokemonStart() {
     loadingScreen();
     await getPokemonData();
@@ -63,6 +65,20 @@ async function pokemonPreview() {
 }
 
 function createPokemonCard(index) {
+    showPokemonCard();
+    loadPokemonCardStructure(index);   
+    loadPokemonPicture(index);
+    loadPokemonStats(index);
+    loadPokemonAttacks(index);
+    loadPokemonTypes(index);
+} 
+
+function showPokemonCard() {
+    document.getElementsByClassName('overlay')[0].style.display = 'block';
+    document.getElementById('loaded-card').style.display = 'block';
+}
+
+function loadPokemonCardStructure(index) {
     let pokemon = currentPokemon[index];
     let loadedCardContainer = document.getElementById('loaded-card');
 
@@ -78,14 +94,10 @@ function createPokemonCard(index) {
                     <div class="backward" onclick="previousPokemonCard(${index})"> <--- </div>
                     <div class="pokemon-type" id="pokemon-type"></div>
                     <div class="forward" onclick="nextPokemonCard(${index})"> ---> </div>
+                    <div class="close-button" onclick="closePokemonCard()">X</div>
             </div>
         </div>`;
-
-    loadPokemonPicture(index);
-    loadPokemonStats(index);
-    loadPokemonAttacks(index);
-    loadPokemonTypes(index);
-} 
+}
 
 function loadPokemonPicture(index) {
     let pokemon = currentPokemon[index];
@@ -100,12 +112,12 @@ function loadPokemonStats(index) {
     
     document.getElementById('pokemon-stats').innerHTML = '';
     document.getElementById('pokemon-stats').innerHTML = `
-    <div class="hp-stat progress-bar"><div class="bar" style="--value:${pokemon.stats[0].base_stat}">${pokemon.stats[0].base_stat}</div></div>
-      <div class="attack-stat progress-bar"><div class="bar" style="--value:${pokemon.stats[1].base_stat}">${pokemon.stats[1].base_stat}</div></div>
-      <div class="defense-stat progress-bar"><div class="bar" style="--value:${pokemon.stats[2].base_stat}">${pokemon.stats[2].base_stat}</div></div>
-      <div class="special-attack-stat progress-bar"><div class="bar" style="--value:${pokemon.stats[3].base_stat}">${pokemon.stats[3].base_stat}</div></div>
-      <div class="special-defense-stat progress-bar"><div class="bar" style="--value:${pokemon.stats[4].base_stat}">${pokemon.stats[4].base_stat}</div></div>
-      <div class="speed-stat progress-bar"><div class="bar" style="--value:${pokemon.stats[5].base_stat}">${pokemon.stats[5].base_stat}</div></div>
+        <div class="hp-stat progress-bar"><div class="bar" style="--value:${pokemon.stats[0].base_stat}">${pokemon.stats[0].base_stat}</div></div></div>
+        <div class="attack-stat progress-bar"><div class="bar" style="--value:${pokemon.stats[1].base_stat}">${pokemon.stats[1].base_stat}</div></div>
+        <div class="defense-stat progress-bar"><div class="bar" style="--value:${pokemon.stats[2].base_stat}">${pokemon.stats[2].base_stat}</div></div>
+        <div class="special-attack-stat progress-bar"><div class="bar" style="--value:${pokemon.stats[3].base_stat}">${pokemon.stats[3].base_stat}</div></div>
+        <div class="special-defense-stat progress-bar"><div class="bar" style="--value:${pokemon.stats[4].base_stat}">${pokemon.stats[4].base_stat}</div></div>
+        <div class="speed-stat progress-bar"><div class="bar" style="--value:${pokemon.stats[5].base_stat}">${pokemon.stats[5].base_stat}</div></div>
     `;
 
 }
@@ -147,7 +159,9 @@ function previousPokemonCard(index) {
 }
 
 function closePokemonCard() {
-
+    document.getElementById('loaded-card').innerHTML = '';
+    document.getElementById('loaded-card').style.display = 'none';
+    document.getElementsByClassName('overlay')[0].style.display = 'none';
 }
 
 

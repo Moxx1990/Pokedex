@@ -15,7 +15,6 @@
     <a class="navbar-brand" onclick="reload()">Pokedex</a>
     <form class="d-flex" role="search">
       <input class="form-control me-2" type="search" onkeyup="searchPokemon()" placeholder="Search for Pokemon..." aria-label="Search" id="search-input"/>
-      <button class="button" type="submit">Search</button>
     </form>
   </div>
 </nav>
@@ -25,7 +24,10 @@
   <button onclick="loadMorePokemon()" class="button">Load More Pokémon</button>
 </div>
 
+<div class="overlay">
 <div id="loaded-card"></div>
+</div>
+
 
 <footer class="footer">
     <p>© 2026 Pokedex. All rights reserved.</p> 
