@@ -23,6 +23,18 @@ body {
     cursor: pointer;
 }
 
+.pokeball {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.search {
+    padding: 10px;
+    font-size: 16px;
+}
+
 .pokemon-container {
     display: flex;
     justify-content: center;
@@ -67,6 +79,7 @@ body {
 
 .pokemon-card-name {
     text-transform: capitalize;
+    font-size: 32px;
    
 }
 
@@ -260,6 +273,8 @@ body {
 }
 
 .loaded_card {
+    display: flex;
+    flex-direction: column;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -282,7 +297,6 @@ body {
 }
 
 .pokemon-info {
-    margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -291,10 +305,23 @@ body {
 
 .pokemon-type-navigation {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    bottom: 0;
+    align-items: stretch;
+    flex: 1;
+}
+
+.pokemon-type-navigation > div {
+  flex: 1;                     
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.forward, .backward {
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+    user-select: none;
 }
 
 .progress-bar {
@@ -315,11 +342,12 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    padding: 10px;
 }
 
 .attack{
     border: 1px solid black;
-    border-radius: 5px;
+    border-radius: 50px;
     padding: 5px;
     margin: 5px;
     text-transform: capitalize;
@@ -332,4 +360,47 @@ body {
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+@media (max-width: 380px) {
+    .loaded_card {
+        width: 90vw;
+        height: 80vh;
+    }
+
+    .pokeball {
+        display: none;
+    }
+
+    .search {
+        padding: 0;
+    }
+
+    .pokemon-picture {
+       height: 150px;
+   }
+    .pokemon-card-name {
+          font-size: 20px;
+     }
+}
+
+@media (min-width: 471px) and (max-width: 630px) {
+    .loaded_card {
+        width: 80vw;
+    }
+}
+
+@media (min-width: 381px) and (max-width: 470px) {
+   .pokemon-picture {
+       height: 200px;
+   }
+
+   .loaded_card {
+        width: 80vw;
+    }
+
+    .pokemon-card-name {
+        font-size: 24px;
+    }
+
 }

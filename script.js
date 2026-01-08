@@ -65,6 +65,7 @@ async function pokemonPreview() {
 }
 
 function createPokemonCard(index) {
+    event.stopPropagation();
     showPokemonCard();
     loadPokemonCardStructure(index);   
     loadPokemonPicture(index);
@@ -94,7 +95,7 @@ function loadPokemonCardStructure(index) {
                     <div class="backward" onclick="previousPokemonCard(${index})"> <--- </div>
                     <div class="pokemon-type" id="pokemon-type"></div>
                     <div class="forward" onclick="nextPokemonCard(${index})"> ---> </div>
-                    <div class="close-button" onclick="closePokemonCard()">X</div>
+                    
             </div>
         </div>`;
 }
@@ -148,15 +149,23 @@ function loadPokemonTypes(index) {
 
 function nextPokemonCard(index) {
     currentPokemon[index ++];
-    console.log(currentPokemon[index]);
     createPokemonCard(index);
 }
 
 function previousPokemonCard(index) {
     currentPokemon[index --];
-    console.log(currentPokemon[index]);
     createPokemonCard(index);
 }
+
+document.addEventListener('click', (event) => {
+  const card = document.getElementById('loaded-card');
+
+  if (!card) return;
+
+  if (!card.contains(event.target)) {
+    closePokemonCard();
+  }
+});
 
 function closePokemonCard() {
     document.getElementById('loaded-card').innerHTML = '';
