@@ -6,7 +6,7 @@
     <title>Pokedex</title>
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
-    
+    <link rel="icon" type="image/png" href="/picture/pokeball.png">
 </head>
 <body onload="getPokemonStart()">
 
@@ -18,16 +18,16 @@
     </form>
   </div>
 </nav>
+
 <div id="pokemon-container" class="pokemon-container"></div>
 
-<div class="load-more">
+<div class="load-more" id="load-more">
   <button onclick="loadMorePokemon()" class="button">Load More Pokémon</button>
 </div>
 
 <div class="overlay">
-<div id="loaded-card"></div>
+  <div id="loaded-card"></div>
 </div>
-
 
 <footer class="footer">
     <p>© 2026 Pokedex. All rights reserved.</p> 

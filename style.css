@@ -214,23 +214,23 @@ body {
 }
 
 .loading {
-  margin-bottom: 20px;
-  display: block;
-  width: 192px;
-  height: 192px;
-  background: radial-gradient(
-      white 16px,
-      black 17px 18px,
-      white 19px 24px,
-      black 25px 32px,
-      transparent 33px
-    ),
+    margin-bottom: 20px;
+    display: block;
+    width: 192px;
+    height: 192px;
+    background: radial-gradient(
+        white 16px,
+        black 17px 18px,
+        white 19px 24px,
+        black 25px 32px,
+        transparent 33px
+        ),
     linear-gradient(to bottom, red 0 80px, black 81px 96px, white 97px 100%);
-  border-radius: 50%;
-  border: 8px solid black;
-  box-shadow: inset -16px -8px 0 0 rgba(0, 0, 0, 0.2);
-  animation:
-    shake 1.25s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.1s infinite;
+    border-radius: 50%;
+    border: 8px solid black;
+    box-shadow: inset -16px -8px 0 0 rgba(0, 0, 0, 0.2);
+    animation:
+        shake 1.25s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.1s infinite;
 }
 
 /* Animation */
@@ -362,6 +362,33 @@ body {
     width: 100%;
 }
 
+@media (min-width: 471px) and (max-width: 630px) {
+    .loaded_card {
+        width: 80vw;
+    }
+
+    .progress-bar {
+        width: 250px;
+    }
+}
+
+@media (min-width: 381px) and (max-width: 470px) {
+   .pokemon-picture {
+       height: 200px;
+   }
+
+   .loaded_card {
+        width: 80vw;
+    }
+
+    .pokemon-card-name {
+        font-size: 24px;
+    }
+    .progress-bar {
+        width: 220px;
+    }
+}
+
 @media (max-width: 380px) {
     .loaded_card {
         width: 90vw;
@@ -378,29 +405,12 @@ body {
 
     .pokemon-picture {
        height: 150px;
-   }
+    }
     .pokemon-card-name {
           font-size: 20px;
-     }
-}
-
-@media (min-width: 471px) and (max-width: 630px) {
-    .loaded_card {
-        width: 80vw;
-    }
-}
-
-@media (min-width: 381px) and (max-width: 470px) {
-   .pokemon-picture {
-       height: 200px;
-   }
-
-   .loaded_card {
-        width: 80vw;
     }
 
-    .pokemon-card-name {
-        font-size: 24px;
+    .progress-bar {
+        width: 200px;
     }
-
 }
