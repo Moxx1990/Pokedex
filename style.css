@@ -4,6 +4,9 @@ body {
     background-color: white;
     margin: 0;
     padding: 0;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .navbar {
@@ -57,6 +60,21 @@ body {
     background-color: #f8f8f8;
     text-transform: capitalize;
     cursor: pointer;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}
+
+.pokemon-card img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .pokemon-card:hover {
@@ -289,6 +307,11 @@ body {
     overflow-y: auto;
 }
 
+.loaded_card img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
 .pokemon-picture {
     display: flex;
     justify-content: center;
@@ -328,29 +351,42 @@ body {
     width: 300px;
     height: 25px;
     background-color: #e0e0e0;
-    border-radius: 5px;
+    border-radius: 20px;
     overflow: hidden;
+    margin: 1px;
 }
 
 .bar {
     height: 100%;
     width: calc((var(--value) / 200) * 100%);
-    background-color: #4caf50;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
 }
 
 .pokemon-attacks {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 10px;
+    gap: 10px;
+    padding: 15px;
 }
 
-.attack{
-    border: 1px solid black;
-    border-radius: 50px;
-    padding: 5px;
-    margin: 5px;
+.attack {
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 14px;
+    font-weight: 600;
     text-transform: capitalize;
+    cursor: default;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: lightgray;
+}
+
+.attack:hover {
+    filter: brightness(0.8) saturate(1.2);
+    transform: translateY(-2px);
 }
 
 .footer {
@@ -362,7 +398,31 @@ body {
     width: 100%;
 }
 
-@media (min-width: 471px) and (max-width: 630px) {
+.error-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 300px;
+    text-align: center;
+    position: relative;
+}
+
+.error-message {
+    font-weight: bold;
+    color: red; margin-bottom: 20px;
+}
+
+@media (min-width: 511px) and (max-width: 630px) {
     .loaded_card {
         width: 80vw;
     }
@@ -370,9 +430,14 @@ body {
     .progress-bar {
         width: 250px;
     }
+
+    .pokemon-type-navigation {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
 }
 
-@media (min-width: 381px) and (max-width: 470px) {
+@media (min-width: 381px) and (max-width: 510px) {
    .pokemon-picture {
        height: 200px;
    }
@@ -386,6 +451,15 @@ body {
     }
     .progress-bar {
         width: 220px;
+    }
+
+    .pokemon-type-navigation {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .attack {
+        font-size: 13px;
     }
 }
 
@@ -412,5 +486,14 @@ body {
 
     .progress-bar {
         width: 200px;
+    }
+
+    .pokemon-type-navigation {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .attack {
+        font-size: 12px;
     }
 }
