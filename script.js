@@ -14,6 +14,7 @@ async function getPokemonStart() {
 async function reload() {
     pokemonloadIndex = 20;
     getPokemonStart();
+    document.getElementById('search-input').value = '';
 }
 
 async function getPokemonData() {
@@ -59,6 +60,12 @@ function createPokemonCard(index) {
     loadPokemonTypes(index);
 }
 
+function getActivePokemon() {
+    return window.isFromSearch
+        ? searchedPokemon[window.activeIndex]
+        : currentPokemon[window.activeIndex];
+}
+
 function nextPokemonCard(index) {
     changePokemonCard(index, 1);
 }
@@ -75,9 +82,17 @@ function changePokemonCard(index, direction) {
     if (newIndex < 0 || newIndex >= currentPokemon.length) return;
 
     createPokemonCard(newIndex);
+    scrollToEnd();
 
     prevBtn.disabled = newIndex <= 0;
     nextBtn.disabled = newIndex >= currentPokemon.length - 1;
+}
+
+function scrollToEnd() {
+    document.getElementById("pokemon-type-navigation").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 }
 
 document.addEventListener('click', (event) => {
@@ -138,6 +153,6 @@ function renderPokemonCard(pokemon, container) {
     let index = currentPokemon.indexOf(pokemon);
     let type1 = pokemon.types[0].type.name;
     let type2 = pokemon.types[1]?.type.name || "none";
-    
+
     renderSearchCard(index, type1, type2, container);
 }

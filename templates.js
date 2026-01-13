@@ -41,9 +41,9 @@ function loadPokemonInfo(index) {
 function loadTypeNavigation(index) {
     
     document.getElementById('pokemon-type-navigation').innerHTML = `
-        <div class="backward" id="backward" onclick="previousPokemonCard(${index})"> &#129032 </div>
+        <div class="backward" id="backward" onclick="previousPokemonCard(${index})" href="#backward"> &#129032 </div>
         <div class="pokemon-type" id="pokemon-type"></div>
-        <div class="forward" id="forward" onclick="nextPokemonCard(${index})"> &#129034 </div> `;
+        <div class="forward" id="forward" onclick="nextPokemonCard(${index})" href="#froward"> &#129034 </div> `;
 }
 
 function loadPokemonPicture(index) {
