@@ -17,8 +17,8 @@ function showPokemonCard() {
     document.getElementById('loaded-card').style.display = 'block';
 }
 
-function loadPokemonCardStructure(index) {
-    let pokemon = currentPokemon[index];
+function loadPokemonCardStructure(index, pokemonArray) {
+    let pokemon = pokemonArray[index];
     let loadedCardContainer = document.getElementById('loaded-card');
 
     loadedCardContainer.innerHTML = `
@@ -30,8 +30,8 @@ function loadPokemonCardStructure(index) {
         </div>`;
 }
 
-function loadPokemonInfo(index) {
-    let pokemon = currentPokemon[index];
+function loadPokemonInfo(index, pokemonArray) {
+    let pokemon = pokemonArray[index];
     document.getElementById('pokemon-info').innerHTML = `
         <h2 class="pokemon-card-name" id="pokemon-card-name">${pokemon.name}</h2>
                 <div class="pokemon-stats" id="pokemon-stats"></div>
@@ -46,15 +46,15 @@ function loadTypeNavigation(index) {
         <div class="forward" id="forward" onclick="nextPokemonCard(${index})" href="#froward"> &#129034 </div> `;
 }
 
-function loadPokemonPicture(index) {
-    let pokemon = currentPokemon[index];
+function loadPokemonPicture(index, pokemonArray) {
+    let pokemon = pokemonArray[index];
     document.getElementById('pokemon-picture').classList.add(`${pokemon.types[0].type.name}`);
     document.getElementById('pokemon-picture').innerHTML = `
         <img src="${pokemon.sprites.other['home'].front_default}">`;
 }
 
-function loadPokemonStats(index) {
-    let pokemon = currentPokemon[index];
+function loadPokemonStats(index, pokemonArray) {
+    let pokemon = pokemonArray[index];
     
     document.getElementById('pokemon-stats').innerHTML = '';
     document.getElementById('pokemon-stats').innerHTML = `
@@ -66,8 +66,8 @@ function loadPokemonStats(index) {
         <div class="speed-stat progress-bar"><div class="bar ${pokemon.types[0].type.name}" style="--value:${pokemon.stats[5].base_stat}">${pokemon.stats[5].base_stat}</div></div>`;
 }
 
-function loadPokemonAttacks(index) {
-    let pokemon = currentPokemon[index];
+function loadPokemonAttacks(index, pokemonArray) {
+    let pokemon = pokemonArray[index];
     let maxMoves = Math.min(pokemon.moves.length, 15);
 
     document.getElementById('pokemon-attacks').innerHTML = '';
@@ -78,8 +78,8 @@ function loadPokemonAttacks(index) {
     }
 }
 
-function loadPokemonTypes(index) {
-    let pokemon = currentPokemon[index];
+function loadPokemonTypes(index, pokemonArray) {
+    let pokemon = pokemonArray[index];
 
     document.getElementById('pokemon-type').innerHTML = '';
     document.getElementById('pokemon-type').innerHTML = `
@@ -119,9 +119,9 @@ function showLoadMoreButton() {
 function renderSearchCard(index, type1, type2, container) {
     container.innerHTML += `
         <div class="pokemon-card" onclick="createPokemonCard(${index})">
-            <div>#${currentPokemon[index].id} ${currentPokemon[index].name}</div>
+            <div>#${searchedPokemon[index].id} ${searchedPokemon[index].name}</div>
             <div class="${type1} pokemon-card-image">
-                <img src="${currentPokemon[index].sprites.other.home.front_default}">
+                <img src="${searchedPokemon[index].sprites.other.home.front_default}">
             </div>
             <div class="pokemon-card-type">
                 <img src="./picture/${type1}.png" class="${type1} pokemon-type-icon">

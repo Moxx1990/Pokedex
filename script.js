@@ -1,5 +1,7 @@
 let pokemonloadIndex = 20;
 let currentPokemon = [];
+let isSearchActive = false;
+let searchedPokemon = [];
 
 async function getPokemonStart() {
     document.getElementById('load-more').style.display = 'none';
@@ -12,6 +14,8 @@ async function getPokemonStart() {
 
 
 async function reload() {
+    isSearchActive = false;
+    searchedPokemon = [];
     pokemonloadIndex = 20;
     getPokemonStart();
     document.getElementById('search-input').value = '';
@@ -50,14 +54,15 @@ async function pokemonPreview() {
 function createPokemonCard(index) {
     document.body.style.overflow = 'hidden';
     event.stopPropagation();
+    let pokemonArray = isSearchActive ? searchedPokemon : currentPokemon;
     showPokemonCard();
-    loadPokemonCardStructure(index); 
-    loadPokemonInfo(index); 
-    loadTypeNavigation(index); 
-    loadPokemonPicture(index);
-    loadPokemonStats(index);
-    loadPokemonAttacks(index);
-    loadPokemonTypes(index);
+    loadPokemonCardStructure(index, pokemonArray); 
+    loadPokemonInfo(index, pokemonArray); 
+    loadTypeNavigation(index, pokemonArray); 
+    loadPokemonPicture(index, pokemonArray);
+    loadPokemonStats(index, pokemonArray);
+    loadPokemonAttacks(index, pokemonArray);
+    loadPokemonTypes(index, pokemonArray);
 }
 
 function getActivePokemon() {
@@ -77,15 +82,16 @@ function previousPokemonCard(index) {
 function changePokemonCard(index, direction) {
     let prevBtn = document.getElementById('backward');
     let nextBtn = document.getElementById('forward');
+    let  pokemonArray = isSearchActive ? searchedPokemon : currentPokemon;
 
     let newIndex = index + direction;
-    if (newIndex < 0 || newIndex >= currentPokemon.length) return;
+    if (newIndex < 0 || newIndex >= pokemonArray.length) return;
 
     createPokemonCard(newIndex);
     scrollToEnd();
 
     prevBtn.disabled = newIndex <= 0;
-    nextBtn.disabled = newIndex >= currentPokemon.length - 1;
+    nextBtn.disabled = newIndex >= pokemonArray.length - 1;
 }
 
 function scrollToEnd() {
@@ -114,6 +120,7 @@ function searchPokemon() {
     let input = getSearchInput();
 
     if (input.length === 0) {
+        isSearchActive = false;
         showLoadMoreButton();
         pokemonPreview();
         return;
@@ -121,6 +128,7 @@ function searchPokemon() {
     if (input.length < 3 && isNaN(input)) {
         return;
     }
+    isSearchActive = true;
     hideLoadMoreButton();
     
     let container = clearContainer();
@@ -143,14 +151,16 @@ function clearContainer() {
 }
 
 function getMatchingPokemon(input) {
-    return currentPokemon.filter(pokemon =>
-        pokemon.name.toLowerCase().includes(input) ||
+    const matches =  currentPokemon.filter(pokemon =>
+        pokemon.name.toLowerCase().includes(input.toLowerCase()) ||
         pokemon.id.toString() === input
     );
+    searchedPokemon = matches;
+    return matches;
 }
 
 function renderPokemonCard(pokemon, container) {
-    let index = currentPokemon.indexOf(pokemon);
+    let index = searchedPokemon.indexOf(pokemon);
     let type1 = pokemon.types[0].type.name;
     let type2 = pokemon.types[1]?.type.name || "none";
 

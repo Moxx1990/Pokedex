@@ -530,7 +530,7 @@ body {
 }
 
 @media (min-height: 1401px) {
-      .h2 {
+    .h2 {
         font-size: 45px;
     }
     
@@ -540,5 +540,47 @@ body {
 
     .pokemon-picture {
         height: 400px;
+    }
+}
+
+@media (min-height: 800px) and (max-height: 880px) {
+    .h2 {
+        font-size: 35px;
+    }
+    
+    .attack {
+        font-size: 12px;
+    }
+
+    .pokemon-picture {
+        height: 200px;
+    }
+}
+
+@media (min-height: 700px) and (max-height: 799px) {
+    .h2 {
+        font-size: 32px;
+    }
+    
+    .attack {
+        font-size: 10px;
+    }
+
+    .pokemon-picture {
+        height: 150px;
+    }
+}
+
+@media (max-height: 699px) {
+    .h2 {
+        font-size: 20px;
+    }
+    
+    .attack {
+        font-size: 10px;
+    }
+
+    .pokemon-picture {
+        height: 130px;
     }
 }
