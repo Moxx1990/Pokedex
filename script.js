@@ -51,6 +51,12 @@ async function pokemonPreview() {
     } 
 }
 
+function createPreviewCard(pokemonName, pokemonId, pokemonImage, pokemonType, pokemonSecondType, index) {
+    let container = document.getElementById('pokemon-container');
+
+    container.innerHTML += templatePreviewCard(pokemonName, pokemonId, pokemonImage, pokemonType, pokemonSecondType, index);
+}
+
 function createPokemonCard(index) {
     document.body.style.overflow = 'hidden';
     event.stopPropagation();
@@ -65,33 +71,94 @@ function createPokemonCard(index) {
     loadPokemonTypes(index, pokemonArray);
 }
 
+function showPokemonCard() {
+    document.getElementsByClassName('overlay')[0].style.display = 'block';
+    document.getElementById('loaded-card').style.display = 'block';
+}
+
+function loadPokemonCardStructure(index, pokemonArray) {
+    let pokemon = pokemonArray[index];
+    let loadedCardContainer = document.getElementById('loaded-card');
+    loadedCardContainer.innerHTML = templateCardStructure(pokemon);
+}
+
+function loadPokemonInfo(index, pokemonArray) {
+    let pokemon = pokemonArray[index];
+    document.getElementById('pokemon-info').innerHTML = templatePokemonInfo(pokemon);
+}
+
+function loadTypeNavigation(index, pokemonArray) {
+    document.getElementById('pokemon-type-navigation').innerHTML = templateTypeNavigation(index);
+    disableNavigationButtons(index, pokemonArray);
+}
+
+function loadPokemonPicture(index, pokemonArray) {
+    let pokemon = pokemonArray[index];
+    document.getElementById('pokemon-picture').classList.add(`${pokemon.types[0].type.name}`);
+    document.getElementById('pokemon-picture').innerHTML = templatePokemonPicture(pokemon);
+}
+
+function loadPokemonStats(index, pokemonArray) {
+    let pokemon = pokemonArray[index];
+    
+    document.getElementById('pokemon-stats').innerHTML = '';
+    document.getElementById('pokemon-stats').innerHTML = templatePokemonStats(pokemon);
+}
+
+function loadPokemonAttacks(index, pokemonArray) {
+    let pokemon = pokemonArray[index];
+    let maxMoves = Math.min(pokemon.moves.length, 15);
+
+    document.getElementById('pokemon-attacks').innerHTML = '';
+
+    for (let i = 0; i < maxMoves; i++) {
+        document.getElementById('pokemon-attacks').innerHTML += templatePokemonAttacks(pokemon, i);
+    }
+}
+
+function loadPokemonTypes(index, pokemonArray) {
+    let pokemon = pokemonArray[index];
+
+    document.getElementById('pokemon-type').innerHTML = '';
+    document.getElementById('pokemon-type').innerHTML = templatePokemonTypes(pokemon);
+}
+
+function closePokemonCard() {
+    document.getElementById('loaded-card').innerHTML = '';
+    document.getElementById('loaded-card').style.display = 'none';
+    document.getElementsByClassName('overlay')[0].style.display = 'none';
+    document.body.style.removeProperty('overflow');
+}
+
 function getActivePokemon() {
     return window.isFromSearch
         ? searchedPokemon[window.activeIndex]
         : currentPokemon[window.activeIndex];
 }
 
-function nextPokemonCard(index) {
-    changePokemonCard(index, 1);
-}
-
-function previousPokemonCard(index) {
-    changePokemonCard(index, -1);
-}
-
 function changePokemonCard(index, direction) {
-    let prevBtn = document.getElementById('backward');
-    let nextBtn = document.getElementById('forward');
-    let  pokemonArray = isSearchActive ? searchedPokemon : currentPokemon;
+    let pokemonArray = isSearchActive ? searchedPokemon : currentPokemon;
 
     let newIndex = index + direction;
     if (newIndex < 0 || newIndex >= pokemonArray.length) return;
 
     createPokemonCard(newIndex);
     scrollToEnd();
+}
 
-    prevBtn.disabled = newIndex <= 0;
-    nextBtn.disabled = newIndex >= pokemonArray.length - 1;
+function disableNavigationButtons(newIndex, pokemonArray) {
+    let prevBtn = document.getElementById('backward');
+    let nextBtn = document.getElementById('forward');
+
+    if (newIndex <= 0) {
+        prevBtn.disabled = true; 
+        prevBtn.innerHTML = "";
+        prevBtn.style.cursor = "default";
+    } else if (newIndex >= pokemonArray.length - 1) {
+        nextBtn.innerHTML = "";
+        nextBtn.style.cursor = "default";
+        nextBtn.disabled = true;
+    } 
 }
 
 function scrollToEnd() {
@@ -111,33 +178,42 @@ document.addEventListener('click', (event) => {
     }
 );
 
+function loadingScreen() {
+    let container = document.getElementById('pokemon-container');
+    container.innerHTML = templateLoadingScreen();
+}
+
 async function loadMorePokemon() {
     pokemonloadIndex = pokemonloadIndex + 20;
     getPokemonStart();
 }
 
+function hideLoadMoreButton() {
+    document.getElementById('load-more').style.display = 'none';
+}
+
+function showLoadMoreButton() {
+    document.getElementById('load-more').style.display = 'flex';
+}
+
 function searchPokemon() {
     let input = getSearchInput();
 
-    if (input.length === 0) {
-        isSearchActive = false;
-        showLoadMoreButton();
-        pokemonPreview();
-        return;
-    }
-    if (input.length < 3 && isNaN(input)) {
-        return;
-    }
+    if (input.length === 0) return resetSearch();
+    if (input.length < 3 && isNaN(input)) return;
     isSearchActive = true;
     hideLoadMoreButton();
     
     let container = clearContainer();
     let results = getMatchingPokemon(input);
-    if (results.length === 0) {
-        showNoResults(container);
-        return;
-    }
+    if (results.length === 0) return showNoResults(container);
     results.forEach(pokemon => renderPokemonCard(pokemon, container));
+}
+
+function resetSearch() {
+    isSearchActive = false;
+    showLoadMoreButton();
+    pokemonPreview();
 }
 
 function getSearchInput() {
@@ -159,10 +235,18 @@ function getMatchingPokemon(input) {
     return matches;
 }
 
+function showNoResults(container) {
+    container.innerHTML = templateShowNoResults(container);
+}
+
 function renderPokemonCard(pokemon, container) {
     let index = searchedPokemon.indexOf(pokemon);
     let type1 = pokemon.types[0].type.name;
     let type2 = pokemon.types[1]?.type.name || "none";
 
     renderSearchCard(index, type1, type2, container);
+}
+
+function renderSearchCard(index, type1, type2, container) {
+    container.innerHTML += templateSearchCard(index, type1, type2, container);
 }

@@ -319,6 +319,7 @@ body {
     width: min(90vw, 520px);
     max-width: 520px;
     overflow-y: auto;
+    max-height: 1200px;
 }
 
 .loaded_card img {
@@ -359,7 +360,7 @@ body {
     font-size: 24px;
     font-weight: bold;
     user-select: none;
-}
+ }
 
 .progress-bar {
     width: 300px;
